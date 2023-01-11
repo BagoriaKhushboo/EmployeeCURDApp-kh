@@ -1,5 +1,4 @@
 const repo = require("../repositories/employeeRepository");
-const employees = [];
 
 // localhost:4200/api/Employee - POST
 module.exports.createEmployee = (req, res) => {
@@ -79,5 +78,25 @@ module.exports.deleteEmployee = (req, res) => {
       return res.status(400).send("No such employee");
     }
     return res.status(200).send("Employee deleted");
+  });
+};
+
+module.exports.getBySalary = (req, res) => {
+  repo.getEmployeesBySalary(50000, (docs) => {
+    return res.status(200).send(docs);
+  });
+};
+
+module.exports.getITEmployees = (req, res) => {
+  repo.getEmployeesWithLogicalOperartions((docs) => {
+    return res.status(200).send(docs);
+  });
+};
+
+// *****pagination*****
+module.exports.lazyLoad = (req, res) => {
+  const page = req.params.page;
+  repo.lazyLoad(page, (docs) => {
+    return res.status(200).send(docs);
   });
 };
